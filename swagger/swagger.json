@@ -1,0 +1,290 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "Criptocurrencies wallet"
+  },
+  "host": "petstore.swagger.io",
+  "tags": [
+    {
+      "name": "coin",
+      "description": ""
+    },
+    {
+      "name": "wallet",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/coin/buy": {
+      "post": {
+        "tags": [
+          "coin"
+        ],
+        "summary": "Buy coin with USD",
+        "description": "",
+        "operationId": "buyCoin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "coin_id"
+              ],
+              "properties": {
+                "coin_id": {
+                  "type": "string"
+                },
+                "wallet_id": {
+                  "type": "string"
+                },
+                "amount_usd": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request error"
+          },
+          "404": {
+            "description": "A coin with the specified ID was not found."
+          }
+        }
+      }
+    },
+    "/coin/sell": {
+      "post": {
+        "tags": [
+          "coin"
+        ],
+        "summary": "Sell coin",
+        "description": "",
+        "operationId": "sellCoin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "coin_id"
+              ],
+              "properties": {
+                "coin_id": {
+                  "type": "string"
+                },
+                "wallet_id": {
+                  "type": "string"
+                },
+                "amount_usd": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request error"
+          },
+          "404": {
+            "description": "A coin with the specified ID was not found."
+          }
+        }
+      }
+    },
+    "/wallet/open": {
+      "post": {
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Open a new wallet",
+        "description": "",
+        "operationId": "openWallet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "wallet_id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request error"
+          },
+          "404": {
+            "description": "A user with the specified ID was not found."
+          }
+        }
+      }
+    },
+    "/wallet/{wallet_id}/": {
+      "get": {
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Gets wallet cryptocurrencies",
+        "description": "",
+        "operationId": "getsWalletCryptocurrencies",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the wallet to get information"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Coin"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request error"
+          },
+          "404": {
+            "description": "a wallet with the specified ID was not found."
+          }
+        }
+      }
+    },
+    "/wallet/{wallet_id}/balance": {
+      "get": {
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Gets total balance of all my criptocurrencies",
+        "description": "",
+        "operationId": "getsWalletBalance",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the wallet to get information"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "balance_usd": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request error"
+          },
+          "404": {
+            "description": "a wallet with the specified ID was not found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Coin": {
+      "type": "object",
+      "required": [
+        "name",
+        "photoUrls"
+      ],
+      "properties": {
+        "coin_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "float"
+        },
+        "value_usd": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    }
+  }
+}
