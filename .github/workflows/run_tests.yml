@@ -25,9 +25,7 @@ jobs:
           php -l src/tests -q
 
       - name: Ejecutar GrumPHP
-        run: |
-          cd src
-          ./vendor/bin/grumphp run -c grumphp.yml
+        run: ./src/vendor/bin/grumphp run -c grumphp.yml
 
       - name: Correr tests con PHPUnit
         run: |
