@@ -1,5 +1,5 @@
 name: run_tests
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   Tests:
@@ -25,7 +25,11 @@ jobs:
           php -l src/tests -q
 
       - name: Ejecutar GrumPHP
-        run: ./src/vendor/bin/grumphp run -c grumphp.yml
+        run: |
+          cd src
+          ./vendor/bin/grumphp run -c grumphp.yml
 
       - name: Correr tests con PHPUnit
-        run: ./src/vendor/bin/phpunit -c phpunit.xml
+        run: |
+          cd src
+          ./vendor/bin/phpunit -c phpunit.xml
