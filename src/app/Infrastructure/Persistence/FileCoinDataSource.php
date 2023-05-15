@@ -8,7 +8,7 @@ use App\Domain\User;
 
 class FileCoinDataSource implements CoinDataSource
 {
-    public function findByName(string $email): ?Coin
+    public function findCoinById(string $coin_id): ?Coin
     {
         return new Coin('1', "Bitcoin","B",12,1);
     }

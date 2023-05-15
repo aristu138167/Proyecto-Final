@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 use Illuminate\Routing\Controller as BaseController;
 
-class OpenWalletController extends BaseController
+class PostWalletOpenController extends BaseController
 {
     private  WalletDataSource $walletDataSource;
 
@@ -20,15 +20,15 @@ class OpenWalletController extends BaseController
 
     public function __invoke(String $user_id): JsonResponse
     {
-        if(existUser($user_id)){
+        if(is_null($user_id)){
             return response()->json([
-                'error' => 'wallet no encontrada',
+                'A user with the specified ID was not found.',
             ], 404);
         }
         else{
             $wallet=$this->walletDataSource->openWallet($user_id);
             return response()->json([
-                'id' => $wallet->getWalletId(),
+                'wallet_id' => $wallet->getWalletId(),
             ], 200);
         }
     }

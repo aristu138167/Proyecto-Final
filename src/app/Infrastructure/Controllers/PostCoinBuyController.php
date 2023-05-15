@@ -4,11 +4,12 @@ namespace App\Infrastructure\Controllers;
 
 use App\Application\CoinDataSource\CoinDataSource;
 use App\Application\UserDataSource\UserDataSource;
+use App\Application\WalletDataSource\WalletDataSource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
-class GetCoinController extends BaseController
+class PostCoinBuyController extends BaseController
 {
     private  CoinDataSource $coinDataSource;
 
@@ -17,21 +18,17 @@ class GetCoinController extends BaseController
         $this->coinDataSource=$coinDataSource;
     }
 
-    public function __invoke(String $name): JsonResponse
+    public function __invoke(String $coin_id,String $wallet_id,float $amount_usd): JsonResponse
     {
-        $coin=$this->coinDataSource->findByName($name);
+        $coin=$this->coinDataSource->findCoinById($coin_id);
         if(is_null($coin)){
             return response()->json([
-                'error' => 'crypto no encontrada',
+                'A coin with the specified ID was not found.',
             ], 404);
         }
         else{
             return response()->json([
-                'id' => $coin->getCoinId(),
-                'name'=> $coin->getName(),
-                'symbol'=>$coin->getSymbol(),
-                'amount'=> $coin->getAmount(),
-                'value_usd'=>$coin->getValueUsd()
+                'successful operation'
             ], 200);
         }
     }

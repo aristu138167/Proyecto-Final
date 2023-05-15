@@ -6,7 +6,7 @@ use App\Domain\Coin;
 
 Interface CoinDataSource
 {
-    public function findByName(string $name): Coin;
+    public function findCoinById(string $coin_id): ?Coin;
 
     /**
      * @return Coin[]
