@@ -23,7 +23,7 @@ jobs:
         run: php -l src -q
 
       - name: Ejecutar el linter en carpeta test
-        run: php -l test -q
+        run: php -l tests -q
 
       - name: Ejecutar GrumPHP
         run: ./vendor/bin/grumphp run -c grumphp.yml
