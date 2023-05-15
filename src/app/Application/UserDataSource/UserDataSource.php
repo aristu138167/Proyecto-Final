@@ -12,4 +12,6 @@ Interface UserDataSource
      * @return User[]
      */
     public function getAll(): array;
+    
+    public function userExist(string $user_id): bool;
 }

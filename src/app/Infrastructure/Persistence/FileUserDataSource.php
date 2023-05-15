@@ -16,4 +16,7 @@ class FileUserDataSource implements UserDataSource
     {
         return [new User(1, "email@email.com"), new User(2, "another_email@email.com")];
     }
+    public function userExist(string $user_id): bool{
+        return true;
+    }
 }

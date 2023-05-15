@@ -2,8 +2,10 @@
 
 use App\Infrastructure\Controllers\GetCoinController;
 use App\Infrastructure\Controllers\GetUserController;
+use App\Infrastructure\Controllers\GetWalletIdController;
 use App\Infrastructure\Controllers\IsEarlyAdopterUserController;
 use App\Infrastructure\Controllers\GetStatusController;
+use App\Infrastructure\Controllers\OpenWalletController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,10 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/status', GetStatusController::class);
-Route::post('/coin/{coin_id}', GetCoinController::class);
+//Route::post('/coin/{coin_id}', GetCoinController::class);
 //Route::post('/coin/buy', GetCoinBuyController::class);
 //Route::post('/coin/sell', GetCoinSellController::class);
-//Route::post('/wallet/open', GetWalletOpenController::class);
-//Route::get('/wallet/{wallet_id}', GetWalletIdController::class);
+Route::post('/wallet/open', OpenWalletController::class);
+Route::get('/wallet/{wallet_id}', GetWalletIdController::class);
 //Route::get('/wallet/{wallet_id}/balance', GetWalletBalanceController::class);
 
