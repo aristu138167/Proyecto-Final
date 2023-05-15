@@ -2,7 +2,7 @@ name: run_tests
 on: [push, pull_request]
 
 jobs:
-  run_tests:
+  Ejecutar tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,7 +15,9 @@ jobs:
           php-version: '8'
 
       - name: Instalar dependencias
-        run: composer install
+        run:
+          cd src
+          composer install
 
       - name: Ejecutar el linter en carpeta src
         run: php -l src -q
