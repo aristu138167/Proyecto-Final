@@ -19,11 +19,10 @@ jobs:
           cd src
           composer install
 
-      - name: Ejecutar el linter en carpeta src
-        run: php -l src -q
-
-      - name: Ejecutar el linter en carpeta test
-        run: php -l tests -q
+      - name: Ejecutar el linter
+        run: |
+          php -l src/app -q
+          php -l src/tests -q
 
       - name: Ejecutar GrumPHP
         run: ./vendor/bin/grumphp run -c grumphp.yml
