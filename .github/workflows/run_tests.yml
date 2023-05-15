@@ -2,7 +2,7 @@ name: run_tests
 on: [push, pull_request]
 
 jobs:
-  "Ejecutar tests":
+  Tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
