@@ -9,7 +9,7 @@ use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
 use function response;
 
-class BuyCoinService
+class SellCoinService
 {
     private CoinDataSource $coinDataSource;
     private WalletDataSource $walletDataSource;
@@ -35,7 +35,7 @@ class BuyCoinService
             ], 404);
         }
         return response()->json([
-            'successful buy operation'
+            'successful sell operation'
         ], 200);
     }
 
