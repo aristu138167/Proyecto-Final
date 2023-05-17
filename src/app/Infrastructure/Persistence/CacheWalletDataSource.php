@@ -11,5 +11,9 @@ class CacheWalletDataSource implements WalletDataSource
     {
         return new Wallet('1');
     }
+    public function findByID(string $wallet_id): ?Wallet
+        {
+        return new Wallet('1');
+    }
 
 }

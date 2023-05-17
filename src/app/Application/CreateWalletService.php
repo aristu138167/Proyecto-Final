@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Application\Services;
+namespace App\Application;
 
 
 
 use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
+use function response;
 
 class CreateWalletService
 {

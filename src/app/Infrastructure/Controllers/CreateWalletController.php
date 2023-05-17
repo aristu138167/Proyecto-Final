@@ -3,10 +3,8 @@
 namespace App\Infrastructure\Controllers;
 
 
-use App\Application\CreateWalletFormRequest;
-use App\Application\Services\CreateWalletService;
+use App\Application\CreateWalletService;
 use Illuminate\Http\JsonResponse;
-
 use Illuminate\Routing\Controller as BaseController;
 
 class CreateWalletController extends BaseController
@@ -20,7 +18,7 @@ class CreateWalletController extends BaseController
 
     public function __invoke(CreateWalletFormRequest $request): JsonResponse
     {
-        $response=$this->createWalletService->execute($request);
-        return $response;
+        return $this->createWalletService->execute($request);
+
     }
 }
