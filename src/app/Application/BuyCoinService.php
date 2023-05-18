@@ -34,10 +34,18 @@ class BuyCoinService
                 'Coin not found exception'
             ], 404);
         }
-        $coin->setAmount($amount_usd / $coin->getValueUsd());
+
         $coins = $wallet->getCoins();
-        $coins[] = $coin;
-        print_r($coins);
+        if(isset($coins[$coin_id])){
+            $existingCoin=$coins[$coin_id];
+            print_r($existingCoin->getAmount());
+            $existingCoin->setAmount($coin->getAmount()+($amount_usd / $coin->getValueUsd()));
+            print_r($existingCoin->getAmount());
+        }
+        else{
+            $coin->setAmount($amount_usd / $coin->getValueUsd());
+            $coins[$coin_id] = $coin;
+        }
         $wallet->setCoins($coins);
         return response()->json([
             'successful buy operation'

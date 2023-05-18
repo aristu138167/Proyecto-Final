@@ -4,17 +4,21 @@ namespace App\Domain;
 
 class User
 {
-    private int $id;
+    private string $id;
     private string $email;
 
-    public function __construct(int $id, string $email)
+    public function __construct(string $id, string $email)
     {
         $this->id = $id;
         $this->email = $email;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
+    }
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 }
