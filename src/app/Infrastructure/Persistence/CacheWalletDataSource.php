@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Cache;
 class CacheWalletDataSource implements WalletDataSource
 {
     public function create(string $user_id): ?Wallet
-    {   $wallet=new Wallet($user_id);
+    {   $cache_wallet=Cache::get($user_id) ;
+        if($cache_wallet){
+            return $cache_wallet;
+        }
+        $wallet=new Wallet($user_id);
         Cache::put($wallet->getWalletId(),$wallet);
         return $wallet;
     }
