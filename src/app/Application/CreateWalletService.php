@@ -29,7 +29,7 @@ class CreateWalletService
         }
         $wallet = $this->walletDataSource->create($user_id);
         return response()->json([
-            'wallet_id' => $wallet->getWalletId(),
+            'wallet_id' => $user_id,
         ], 200);
     }
 
