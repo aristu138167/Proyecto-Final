@@ -13,6 +13,6 @@ class ApiCoinDataSource implements CoinDataSource
     }
     public function findById(string $coin_id): ?Coin
     {
-        return new Coin('1', "Bitcoin","B",12,1);
+        return new Coin('1', "Bitcoin","B",0,1);
     }
 }

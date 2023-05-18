@@ -34,6 +34,14 @@ class SellCoinService
                 'Coin not found exception'
             ], 404);
         }
+        /*
+        $coin->setAmount($amount_usd / $coin->getValueUsd());
+        $coins = $wallet->getCoins();
+        $wallet_coin=$coins[$coin];
+        $coins[] = $coin;
+        print_r($coins);
+        $wallet->setCoins($coins);
+        */
         return response()->json([
             'successful sell operation'
         ], 200);

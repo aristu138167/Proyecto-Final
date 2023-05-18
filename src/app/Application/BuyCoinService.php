@@ -22,18 +22,23 @@ class BuyCoinService
     }
     public function execute(string $coin_id,string $wallet_id, float $amount_usd)
     {
-        $wallet=$this->walletDataSource->findById($wallet_id);
-        if(is_null($wallet)){
+        $wallet = $this->walletDataSource->findById($wallet_id);
+        if (is_null($wallet)) {
             return response()->json([
                 'Wallet not found exception'
             ], 404);
         }
         $coin = $this->coinDataSource->findById($coin_id);
-        if(is_null($coin)){
+        if (is_null($coin)) {
             return response()->json([
                 'Coin not found exception'
             ], 404);
         }
+        $coin->setAmount($amount_usd / $coin->getValueUsd());
+        $coins = $wallet->getCoins();
+        $coins[] = $coin;
+        print_r($coins);
+        $wallet->setCoins($coins);
         return response()->json([
             'successful buy operation'
         ], 200);

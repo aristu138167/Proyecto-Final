@@ -60,4 +60,12 @@ class Coin
         return $this->value_usd;
     }
 
+    /**
+     * @param float $amount
+     */
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
 }
