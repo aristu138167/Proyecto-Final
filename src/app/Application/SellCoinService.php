@@ -57,10 +57,9 @@ class SellCoinService
             ], 404);
         }
         $wallet->setCoins($coins);
-        var_dump($wallet);
         Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
-            'successful sell operation'
+            'Successful sell operation'
         ], 200);
     }
 

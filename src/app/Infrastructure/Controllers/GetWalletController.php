@@ -9,13 +9,13 @@ use Illuminate\Http\JsonResponse;
 
 use Illuminate\Routing\Controller as BaseController;
 
-class GetWalletIdController extends BaseController
+class GetWalletController extends BaseController
 {
     private  WalletDataSource $walletDataSource;
 
     public function __construct(WalletDataSource $walletDataSource)
     {
-        $this->WalletDataSource=$walletDataSource;
+        $this->walletDataSource=$walletDataSource;
     }
 
     public function __invoke(String $wallet_id): JsonResponse
@@ -23,13 +23,13 @@ class GetWalletIdController extends BaseController
         $wallet=$this->walletDataSource->findById($wallet_id);
         if(is_null($wallet)){
             return response()->json([
-                'error' => 'wallet no encontrada',
+                'Wallet no encontrada',
             ], 404);
         }
         else{
-            $coin=$wallet->getCoins();
             return response()->json([
                 'id' => $wallet->getWalletId(),
+                'coins'=>$wallet->showCoins()
             ], 200);
         }
     }

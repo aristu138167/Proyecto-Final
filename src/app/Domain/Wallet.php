@@ -35,6 +35,16 @@ class Wallet
     {
         $this->coins = $coins;
     }
+    public function showCoins(): array
+    {
+        $coinsArray = [];
+
+        foreach ($this->coins as $coinId => $coin) {
+            $coinsArray[$coinId] = $coin->toArray();
+        }
+
+        return $coinsArray;
+    }
 
 
 
