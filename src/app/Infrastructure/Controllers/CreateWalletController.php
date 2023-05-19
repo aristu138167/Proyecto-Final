@@ -18,7 +18,8 @@ class CreateWalletController extends BaseController
 
     public function __invoke(CreateWalletFormRequest $request): JsonResponse
     {
-        return $this->createWalletService->execute($request);
+        $user_id = $request->get('user_id');
+        return $this->createWalletService->execute($user_id);
 
     }
 }

@@ -5,8 +5,7 @@ namespace App\Domain;
 class Wallet
 {
     private string $wallet_id;
-    private array $coins;
-
+    private array $coins = [];
 
     public function __construct(string $wallet_id)
     {
@@ -27,6 +26,14 @@ class Wallet
     public function getCoins(): array
     {
         return $this->coins;
+    }
+
+    /**
+     * @param array $coins
+     */
+    public function setCoins(array $coins): void
+    {
+        $this->coins = $coins;
     }
 
 

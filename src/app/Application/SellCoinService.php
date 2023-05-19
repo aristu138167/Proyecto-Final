@@ -7,6 +7,7 @@ namespace App\Application;
 use App\Application\CoinDataSource\CoinDataSource;
 use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
+use Illuminate\Support\Facades\Cache;
 use function response;
 
 class SellCoinService
@@ -34,6 +35,30 @@ class SellCoinService
                 'Coin not found exception'
             ], 404);
         }
+        $coins = $wallet->getCoins();
+        if(isset($coins[$coin_id])){
+            $existingCoin=$coins[$coin_id];
+            $newAmount =$existingCoin->getAmount()-($amount_usd / $coin->getValueUsd());
+            if($newAmount<0){
+                return response()->json([
+                    'Cantidad de crypto insuficiente'
+                ], 400);
+            }
+            else{
+                $existingCoin->setAmount($newAmount);
+                if($newAmount==0){
+                    unset($coins[$coin_id]);
+                }
+            }
+        }
+        else{
+            return response()->json([
+                'Crypto no encontrada en el wallet'
+            ], 404);
+        }
+        $wallet->setCoins($coins);
+        var_dump($wallet);
+        Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
             'successful sell operation'
         ], 200);

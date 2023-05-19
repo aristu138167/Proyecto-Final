@@ -7,6 +7,7 @@ namespace App\Application;
 use App\Application\CoinDataSource\CoinDataSource;
 use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
+use Illuminate\Support\Facades\Cache;
 use function response;
 
 class BuyCoinService
@@ -22,18 +23,34 @@ class BuyCoinService
     }
     public function execute(string $coin_id,string $wallet_id, float $amount_usd)
     {
-        $wallet=$this->walletDataSource->findById($wallet_id);
-        if(is_null($wallet)){
+        $wallet = $this->walletDataSource->findById($wallet_id);
+        if (is_null($wallet)) {
             return response()->json([
                 'Wallet not found exception'
             ], 404);
         }
         $coin = $this->coinDataSource->findById($coin_id);
-        if(is_null($coin)){
+        if (is_null($coin)) {
             return response()->json([
                 'Coin not found exception'
             ], 404);
         }
+
+        $coins = $wallet->getCoins();
+        if(isset($coins[$coin_id])){
+            $existingCoin=$coins[$coin_id];
+            $newAmount =$existingCoin->getAmount()+($amount_usd / $coin->getValueUsd());
+            $existingCoin->setAmount($newAmount);
+        }
+        else{
+            $newCoin = clone $coin;
+            $newAmount=$amount_usd / $coin->getValueUsd();
+            $newCoin->setAmount($newAmount);
+            $coins[$coin_id] = $newCoin;
+        }
+        $wallet->setCoins($coins);
+        var_dump($wallet);
+        Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
             'successful buy operation'
         ], 200);

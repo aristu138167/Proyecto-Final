@@ -3,7 +3,9 @@
 namespace App\Infrastructure\Controllers;
 
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 
 class BuyCoinFormRequest extends FormRequest
@@ -32,5 +34,10 @@ class BuyCoinFormRequest extends FormRequest
             'wallet_id'=>'id del wallet',
             'amount_usd'=>'candtidad de $'
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new ValidationException($validator, $this->errorBag);
+
     }
 }
