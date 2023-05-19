@@ -38,5 +38,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserDataSource::class, function () {
            return new CacheUserDataSource();
         });
+
     }
 }

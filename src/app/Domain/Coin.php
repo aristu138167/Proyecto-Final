@@ -67,5 +67,13 @@ class Coin
     {
         $this->amount = $amount;
     }
-
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'symbol'=>$this->symbol,
+            'amount'=>$this->amount,
+            'value'=>$this->value_usd
+        ];
+    }
 }

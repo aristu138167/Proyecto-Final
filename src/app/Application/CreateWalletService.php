@@ -22,7 +22,6 @@ class CreateWalletService
     public function execute(string $user_id)
     {
         $user=$this->userDataSource->findUserById($user_id);
-        print_r($user);
         if(is_null($user)){
             return response()->json([
                 'User not found exception',

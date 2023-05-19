@@ -49,7 +49,6 @@ class BuyCoinService
             $coins[$coin_id] = $newCoin;
         }
         $wallet->setCoins($coins);
-        var_dump($wallet);
         Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
             'successful buy operation'
