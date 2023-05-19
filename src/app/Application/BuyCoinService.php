@@ -7,6 +7,7 @@ namespace App\Application;
 use App\Application\CoinDataSource\CoinDataSource;
 use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
+use Illuminate\Support\Facades\Cache;
 use function response;
 
 class BuyCoinService
@@ -38,15 +39,18 @@ class BuyCoinService
         $coins = $wallet->getCoins();
         if(isset($coins[$coin_id])){
             $existingCoin=$coins[$coin_id];
-            print_r($existingCoin->getAmount());
-            $existingCoin->setAmount($coin->getAmount()+($amount_usd / $coin->getValueUsd()));
-            print_r($existingCoin->getAmount());
+            $newAmount =$existingCoin->getAmount()+($amount_usd / $coin->getValueUsd());
+            $existingCoin->setAmount($newAmount);
         }
         else{
-            $coin->setAmount($amount_usd / $coin->getValueUsd());
-            $coins[$coin_id] = $coin;
+            $newCoin = clone $coin;
+            $newAmount=$amount_usd / $coin->getValueUsd();
+            $newCoin->setAmount($newAmount);
+            $coins[$coin_id] = $newCoin;
         }
         $wallet->setCoins($coins);
+        var_dump($wallet);
+        Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
             'successful buy operation'
         ], 200);
