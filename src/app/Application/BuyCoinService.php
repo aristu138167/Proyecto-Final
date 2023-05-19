@@ -51,7 +51,7 @@ class BuyCoinService
         $wallet->setCoins($coins);
         Cache::set("wallet_".$wallet_id,$wallet);
         return response()->json([
-            'successful buy operation'
+            'Successful buy operation'
         ], 200);
     }
 
