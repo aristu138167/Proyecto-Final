@@ -1,0 +1,33 @@
+name: run_tests
+on: [ push, pull_request ]
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          tools: composer:v2
+          php-version: '8.1'
+
+      - name: Instalar dependencias
+        run: |
+          cd src
+          composer install
+
+      - name: Ejecutar el linter
+        run: |
+          php -l src/app -q
+          php -l src/tests -q
+
+      - name: Ejecutar GrumPHP
+        run: ./src/vendor/bin/grumphp run -c grumphp.yml
+
+      - name: Correr tests con PHPUnit
+        run: |
+          cd src
+          ./vendor/bin/phpunit -c phpunit.xml
