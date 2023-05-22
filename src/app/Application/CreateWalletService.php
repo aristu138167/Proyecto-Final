@@ -2,10 +2,9 @@
 
 namespace App\Application;
 
-
-
 use App\Application\UserDataSource\UserDataSource;
 use App\Application\WalletDataSource\WalletDataSource;
+
 use function response;
 
 class CreateWalletService
@@ -14,15 +13,16 @@ class CreateWalletService
     private WalletDataSource $walletDataSource;
 
 
-    public function __construct(WalletDataSource $walletDataSource,UserDataSource $userDataSource)
+    public function __construct(WalletDataSource $walletDataSource, UserDataSource $userDataSource)
     {
         $this->userDataSource = $userDataSource;
         $this->walletDataSource = $walletDataSource;
     }
+
     public function execute(string $user_id)
     {
-        $user=$this->userDataSource->findUserById($user_id);
-        if(is_null($user)){
+        $user = $this->userDataSource->findUserById($user_id);
+        if (is_null($user)) {
             return response()->json([
                 'User not found exception',
             ], 404);
@@ -32,5 +32,4 @@ class CreateWalletService
             'wallet_id' => $wallet->getWalletId(),
         ], 200);
     }
-
 }

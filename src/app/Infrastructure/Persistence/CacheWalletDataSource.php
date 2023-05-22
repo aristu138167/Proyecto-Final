@@ -9,21 +9,23 @@ use Illuminate\Support\Facades\Cache;
 class CacheWalletDataSource implements WalletDataSource
 {
     public function create(string $user_id): ?Wallet
-    {   $cache_wallet=Cache::get("wallet_".$user_id) ;
-        if($cache_wallet){
+    {
+        $cache_wallet = Cache::get("wallet_" . $user_id);
+        if ($cache_wallet) {
             return $cache_wallet;
         }
-        $wallet=new Wallet($user_id);
-        Cache::put("wallet_".$wallet->getWalletId(),$wallet);
+
+        $wallet = new Wallet($user_id);
+        Cache::put("wallet_" . $wallet->getWalletId(), $wallet);
         return $wallet;
     }
-    public function findByID(string $wallet_id): ?Wallet
+
+    public function findById(string $wallet_id): ?Wallet
     {
-        $cache_wallet=Cache::get("wallet_".$wallet_id) ;
-        if($cache_wallet){
+        $cache_wallet = Cache::get("wallet_" . $wallet_id);
+        if ($cache_wallet) {
             return $cache_wallet;
         }
         return null;
     }
-
 }

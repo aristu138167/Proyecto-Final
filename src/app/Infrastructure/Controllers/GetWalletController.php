@@ -11,26 +11,25 @@ use Illuminate\Routing\Controller as BaseController;
 
 class GetWalletController extends BaseController
 {
-    private  WalletDataSource $walletDataSource;
+    private WalletDataSource $walletDataSource;
 
     public function __construct(WalletDataSource $walletDataSource)
     {
-        $this->walletDataSource=$walletDataSource;
+        $this->walletDataSource = $walletDataSource;
     }
 
-    public function __invoke(String $wallet_id): JsonResponse
+    public function __invoke(string $wallet_id): JsonResponse
     {
-        $wallet=$this->walletDataSource->findById($wallet_id);
-        if(is_null($wallet)){
+        $wallet = $this->walletDataSource->findById($wallet_id);
+        if (is_null($wallet)) {
             return response()->json([
                 'Wallet no encontrada',
             ], 404);
         }
-        else{
-            return response()->json([
-                'id' => $wallet->getWalletId(),
-                'coins'=>$wallet->showCoins()
-            ], 200);
-        }
+
+        return response()->json([
+            'id' => $wallet->getWalletId(),
+            'coins' => $wallet->showCoins()
+        ], 200);
     }
 }
