@@ -24,7 +24,7 @@ class CreateWalletService
         $user = $this->userDataSource->findUserById($user_id);
         if (is_null($user)) {
             return response()->json([
-                'User not found exception',
+                'error' => 'Usuario no encontrado',
             ], 404);
         }
         $wallet = $this->walletDataSource->create($user_id);

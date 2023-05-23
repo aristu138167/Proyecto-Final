@@ -26,13 +26,13 @@ class BuyCoinService
         $wallet = $this->walletDataSource->findById($wallet_id);
         if (is_null($wallet)) {
             return response()->json([
-                'Wallet not found exception'
+                'error' => 'Wallet not found exception'
             ], 404);
         }
         $coin = $this->coinDataSource->findById($coin_id);
         if (is_null($coin)) {
             return response()->json([
-                'Coin not found exception'
+                'error' => 'Coin no encontrada'
             ], 404);
         }
 

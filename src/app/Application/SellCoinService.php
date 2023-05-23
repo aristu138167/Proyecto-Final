@@ -26,7 +26,7 @@ class SellCoinService
         $wallet=$this->walletDataSource->findById($wallet_id);
         if(is_null($wallet)){
             return response()->json([
-                'Wallet not found exception'
+                'error' => 'Wallet not found exception'
             ], 404);
         }
         $coin = $this->coinDataSource->findById($coin_id);
@@ -41,7 +41,7 @@ class SellCoinService
             $newAmount =$existingCoin->getAmount()-($amount_usd / $coin->getValueUsd());
             if($newAmount<0){
                 return response()->json([
-                    'Cantidad de crypto insuficiente'
+                    'error' => 'Cantidad de crypto insuficiente'
                 ], 400);
             }
             else{

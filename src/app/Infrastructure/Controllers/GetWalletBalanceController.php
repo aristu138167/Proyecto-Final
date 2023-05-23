@@ -20,7 +20,7 @@ class GetWalletBalanceController extends BaseController
         $wallet = $this->walletDataSource->findById($wallet_id);
         if (is_null($wallet)) {
             return response()->json([
-                'Wallet no encontrada',
+                'error' => 'Wallet no encontrada',
             ], 404);
         }
 

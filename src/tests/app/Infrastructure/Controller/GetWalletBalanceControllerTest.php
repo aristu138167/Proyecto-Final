@@ -25,7 +25,7 @@ class GetWalletBalanceControllerTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson([
-            'Wallet no encontrada',
+            'error' => 'Wallet no encontrada',
         ]);
     }
 
