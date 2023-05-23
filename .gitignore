@@ -25,3 +25,5 @@ vendor/pkg/
 pyenv
 mysql
 Vagrantfile
+.env
+nginx
