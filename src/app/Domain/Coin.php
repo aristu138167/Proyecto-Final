@@ -70,6 +70,7 @@ class Coin
     public function toArray(): array
     {
         return [
+            'id' => $this->coin_id,
             'name' => $this->name,
             'symbol'=>$this->symbol,
             'amount'=>$this->amount,

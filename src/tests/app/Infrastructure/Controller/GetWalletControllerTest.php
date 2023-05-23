@@ -79,7 +79,7 @@ class GetWalletControllerTest extends TestCase
     /**
      * @test
      */
-    public function testWalletExist()
+    public function testWalletExistsWithouCoins()
     {
         $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
         $wallet = new Wallet('33');
@@ -92,10 +92,41 @@ class GetWalletControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'id' => $wallet->getWalletId(),
+            'id' => '33',
             'coins' => []
         ]);
     }
 
+    /**
+     * @test
+     */
+    public function testWalletExistsWithCoins()
+    {
+        $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
 
+        $coin = new Coin('1', 'TestingCoin', 'TC', 1, 1);
+        $wallet = new Wallet('33');
+        $wallet->setCoins([$coin]);
+
+        $walletDataSource->shouldReceive('findById')->andReturn($wallet);
+
+        $this->app->instance(WalletDataSource::class, $walletDataSource);
+
+        $response = $this->get('/api/wallet/33');
+        var_dump($response->getContent());
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'id' => '33',
+            'coins' => [
+                [
+                    'id' => '1',
+                    'name' => 'TestingCoin',
+                    'symbol' => 'TC',
+                    'amount' => 1,
+                    'value' => 1
+                ]
+            ]
+        ]);
+    }
 }
