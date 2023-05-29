@@ -113,7 +113,6 @@ class GetWalletControllerTest extends TestCase
         $this->app->instance(WalletDataSource::class, $walletDataSource);
 
         $response = $this->get('/api/wallet/33');
-        var_dump($response->getContent());
 
         $response->assertStatus(200);
         $response->assertJson([
