@@ -14,21 +14,20 @@ use App\Infrastructure\Persistence\CacheWalletDataSource;
 use Mockery;
 use Tests\TestCase;
 
-class BuyCoinOperationTest extends TestCase
+class SellCoinOperationTest extends TestCase
 {
-
     /**
      * @test
      *
      */
-    public function testWalletDoesNotExist()
+    public function testWalletDoesNotExistWhileSelling()
     {
         $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
         $walletDataSource->shouldReceive('findById')->andReturn(null);
 
         $this->app->instance(WalletDataSource::class, $walletDataSource);
 
-        $response = $this->post('/api/coin/buy', [
+        $response = $this->post('/api/coin/sell', [
             'coin_id' => '1',
             'wallet_id' => '1',
             'amount_usd' => 1
@@ -44,7 +43,7 @@ class BuyCoinOperationTest extends TestCase
      * @test
      *
      */
-    public function testCoinDoesNotExist()
+    public function testCoinDoesNotExistWhileSelling()
     {
         $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
         $wallet = new Wallet('1');
@@ -57,7 +56,7 @@ class BuyCoinOperationTest extends TestCase
 
         $this->app->instance(CoinDataSource::class, $coinDataSource);
 
-        $response = $this->post('/api/coin/buy', [
+        $response = $this->post('/api/coin/sell', [
             'coin_id' => '1',
             'wallet_id' => '1',
             'amount_usd' => 1
@@ -67,35 +66,4 @@ class BuyCoinOperationTest extends TestCase
             'error' => 'Coin no encontrada',
         ]);
     }
-
-    /**
-     * @test
-     *
-     */
-    public function testWalletAndCoinExist()
-    {
-        $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
-        $wallet = new Wallet('1');
-
-        $walletDataSource->shouldReceive('findById')->andReturn($wallet);
-        $this->app->instance(WalletDataSource::class, $walletDataSource);
-
-        $coinDataSource = Mockery::mock(ApiCoinDataSource::class);
-        $coin = new Coin('1', 'TestingCoin', 'TC', 1, 1);
-
-        $coinDataSource->shouldReceive('findById')->andReturn($coin);
-        $this->app->instance(CoinDataSource::class, $coinDataSource);
-
-        $response = $this->post('/api/coin/buy', [
-            'coin_id' => '1',
-            'wallet_id' => '1',
-            'amount_usd' => 1
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-             'Successful buy operation'
-        ]);
-    }
-
 }
