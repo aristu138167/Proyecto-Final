@@ -66,4 +66,28 @@ class SellCoinOperationTest extends TestCase
             'error' => 'Coin no encontrada',
         ]);
     }
+
+    /**
+     * @test
+     *
+     */
+    public function testCryptoNotFoundInWallet(){
+        $walletDataSource = Mockery::mock(CacheWalletDataSource::class);
+        $wallet = new Wallet('4');
+        $wallet->setCoins([]);
+
+        $walletDataSource->shouldReceive('findById')->andReturn($wallet);
+
+        $this->app->instance(WalletDataSource::class, $walletDataSource);
+        $response = $this->post('/api/coin/sell', [
+            'coin_id' => '2',
+            'wallet_id' => '4',
+            'amount_usd' => 1
+        ]);
+
+        $response->assertStatus(404);
+        $response->assertJson([
+            'error' => 'Crypto no encontrada en el wallet'
+        ]);
+    }
 }
